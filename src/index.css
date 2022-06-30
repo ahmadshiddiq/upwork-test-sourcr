@@ -6,7 +6,7 @@
 
 @layer components {
   body {
-    @apply font-mulish;
+    @apply font-mulish leading-tight;
   }
 
   .flex-center {
