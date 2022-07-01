@@ -1,5 +1,7 @@
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon, StarIcon } from "@heroicons/react/solid";
+import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -7,14 +9,17 @@ function classNames(...classes) {
 
 function App() {
   return (
-    <div className="flex h-screen w-screen">
+    <div className="flex h-screen w-screen overflow-hidden">
       <Sidebar />
-      <div className="flex-1 py-10 px-12">
+      <div className="flex-1 overflow-auto py-10 px-12">
         <h2 className="mb-3.5 text-2xl text-primary">Analytics</h2>
         <TopNavigation />
 
         <div className="flex gap-6">
-          <ReviewOverview />
+          <div className="flex w-7/12 flex-col">
+            <ReviewOverview />
+            <Reviews />
+          </div>
           <div className="w-5/12">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, fuga
             minus. Facere ducimus laborum asperiores consequuntur dolor
@@ -26,62 +31,6 @@ function App() {
     </div>
   );
 }
-
-const ReviewOverview = () => {
-  const InfoBox = ({ number, text, status }) => {
-    const borderColor =
-      status === "error"
-        ? "border-error"
-        : status === "warning"
-        ? "border-warning"
-        : status === "normal"
-        ? "border-gray-700"
-        : "border-gray-400";
-
-    const dotColor =
-      status === "error"
-        ? "bg-error"
-        : status === "warning"
-        ? "bg-warning"
-        : status === "normal"
-        ? "bg-gray-700"
-        : "bg-gray-400";
-
-    return (
-      <div
-        className={`${borderColor} flex-center relative h-[94px] w-[99px] flex-col gap-1.5 rounded border bg-white p-2 drop-shadow-one`}
-      >
-        {status && (
-          <div
-            className={`${dotColor} absolute right-2 top-2 h-1.5 w-1.5 rounded-full`}
-          />
-        )}
-        <p className="text-lg font-bold text-primary">{number}</p>
-        <p className="text-center text-[13px] font-medium text-primary">
-          {text}
-        </p>
-      </div>
-    );
-  };
-
-  return (
-    <div className="flex w-7/12 flex-col">
-      <div className="mb-8 rounded bg-white p-6 drop-shadow-one">
-        <p className="mb-4 text-lg font-medium text-primary">
-          Reviews Overview
-        </p>
-        <div className="flex gap-2">
-          <InfoBox number={5} text="Missing Verification" status="error" />
-          <InfoBox number={2} text="Invite not sent" status="normal" />
-          <InfoBox number={3} text="Invite Scheduled" />
-          <InfoBox number={6} text="Invite Sent" status="warning" />
-          <InfoBox number={2} text="Missing Reply" status="error" />
-          <InfoBox number={100} text="Complete" />
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const Sidebar = () => {
   return (
@@ -134,7 +83,7 @@ const MockDropdown = ({ name, className }) => {
       <div>
         <Menu.Button className="flex items-center">
           <span className={className}>{name}</span>
-          <img src="/chevron-down.svg" alt="" className="h-4 w-4" />
+          <ChevronDownIcon className="h-4 w-4 text-primary" />
         </Menu.Button>
       </div>
 
@@ -181,6 +130,134 @@ const MockDropdown = ({ name, className }) => {
         </Menu.Items>
       </Transition>
     </Menu>
+  );
+};
+
+const ReviewOverview = () => {
+  const InfoBox = ({ number, text, status }) => {
+    const borderColor =
+      status === "error"
+        ? "border-error"
+        : status === "warning"
+        ? "border-warning"
+        : status === "normal"
+        ? "border-gray-700"
+        : "border-gray-400";
+
+    const dotColor =
+      status === "error"
+        ? "bg-error"
+        : status === "warning"
+        ? "bg-warning"
+        : status === "normal"
+        ? "bg-gray-700"
+        : "bg-gray-400";
+
+    return (
+      <div
+        className={`${borderColor} flex-center relative h-[94px] w-[99px] flex-col gap-1.5 rounded border bg-white p-2 drop-shadow-one`}
+      >
+        {status && (
+          <div
+            className={`${dotColor} absolute right-2 top-2 h-1.5 w-1.5 rounded-full`}
+          />
+        )}
+        <p className="text-lg font-bold text-primary">{number}</p>
+        <p className="text-center text-[13px] font-medium text-primary">
+          {text}
+        </p>
+      </div>
+    );
+  };
+
+  return (
+    <div className="mb-8 rounded bg-white p-6 drop-shadow-one">
+      <p className="mb-4 text-lg font-medium text-primary">Reviews Overview</p>
+      <div className="flex flex-wrap gap-2">
+        <InfoBox number={5} text="Missing Verification" status="error" />
+        <InfoBox number={2} text="Invite not sent" status="normal" />
+        <InfoBox number={3} text="Invite Scheduled" />
+        <InfoBox number={6} text="Invite Sent" status="warning" />
+        <InfoBox number={2} text="Missing Reply" status="error" />
+        <InfoBox number={100} text="Complete" />
+      </div>
+    </div>
+  );
+};
+
+const Reviews = () => {
+  return (
+    <div className="rounded bg-white drop-shadow-one">
+      <div className="flex justify-between px-6 pt-[22px] pb-4">
+        <div className="flex items-center gap-2.5">
+          <p className="text-lg font-medium text-primary">Reviews Overview</p>
+          <div className="w-max rounded-full bg-error px-1.5 py-0.5 text-xs font-semibold text-white">
+            40
+          </div>
+        </div>
+
+        <div className="flex items-center gap-8">
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-[22px]">
+              <div className="flex items-center gap-1">
+                <p className="text-primary">Your Reply Score</p>
+                <QuestionMarkCircleIcon className="h-4 w-4 text-[#6F7283]" />
+              </div>
+              <p className="text-sm font-semibold text-error">20%</p>
+            </div>
+
+            <div className="relative h-1 w-full rounded-full bg-gray-300">
+              <div
+                className="absolute h-full rounded-full bg-error"
+                style={{ width: "20%" }}
+              />
+            </div>
+          </div>
+          <button className="text-[13px] font-semibold text-secondary underline">
+            View all
+          </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col divide-y divide-gray-200">
+        {[1, 2, 3, 4].map((item) => (
+          <div className="flex items-center py-4 px-6" key={item}>
+            <div className="flex-1">
+              <p className="mb-1.5 text-base font-bold text-primary">
+                Chris Almond (Employer)
+              </p>
+              <p className="mb-2 text-sm font-medium text-[#6F7283]">
+                Head of Digital, Google
+              </p>
+              <p className="text-xs text-gray-400">Matte Harte</p>
+            </div>
+            <div className="flex-1 flex-col">
+              <div className="mb-1 flex flex-1 items-center gap-2">
+                <div className="flex">
+                  {[0, 1, 2, 3, 4].map((rating) => (
+                    <StarIcon
+                      key={rating}
+                      className={classNames(
+                        5 > rating ? "text-warning" : "text-gray-300",
+                        "h-5 w-5 flex-shrink-0"
+                      )}
+                      aria-hidden="true"
+                    />
+                  ))}
+                </div>
+                <p className="text-[13px] text-[#949494]">Fev 2020</p>
+              </div>
+              <p className="text-sm font-medium text-primary">
+                Outstanding service.
+              </p>
+            </div>
+            <button className="flex-center h-9 w-[60px] flex-none rounded border border-secondary bg-white text-xs font-bold uppercase text-secondary">
+              Reply
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
