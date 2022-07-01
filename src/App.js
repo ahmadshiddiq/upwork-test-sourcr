@@ -20,11 +20,11 @@ function App() {
             <ReviewOverview />
             <Reviews />
           </div>
-          <div className="w-5/12">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, fuga
-            minus. Facere ducimus laborum asperiores consequuntur dolor
-            voluptatum eos. Est, quibusdam. Saepe veritatis doloremque officiis
-            et eius! Maiores, veritatis. Ipsum.
+          <div className="flex w-5/12 flex-col gap-6">
+            <OverallRatings />
+            <EmployerRatings />
+            <CandidateRatings />
+            <SpecialisationRatings />
           </div>
         </div>
       </div>
@@ -233,18 +233,7 @@ const Reviews = () => {
             </div>
             <div className="flex-1 flex-col">
               <div className="mb-1 flex flex-1 items-center gap-2">
-                <div className="flex">
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <StarIcon
-                      key={rating}
-                      className={classNames(
-                        5 > rating ? "text-warning" : "text-gray-300",
-                        "h-5 w-5 flex-shrink-0"
-                      )}
-                      aria-hidden="true"
-                    />
-                  ))}
-                </div>
+                <Stars rating={5} />
                 <p className="text-[13px] text-[#949494]">Fev 2020</p>
               </div>
               <p className="text-sm font-medium text-primary">
@@ -257,6 +246,211 @@ const Reviews = () => {
           </div>
         ))}
       </div>
+    </div>
+  );
+};
+
+const OverallRatings = () => {
+  return (
+    <div className="rounded bg-white p-6 drop-shadow-one">
+      <p className="mb-4 text-lg font-medium text-primary">
+        Awesome! Your overall rating is <b>4.9</b>
+      </p>
+      <div className="flex items-center gap-2">
+        <Stars rating={5} />
+        <p className="text-sm font-medium text-gray-500">
+          (4.9 rating based on 20 reviews)
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const EmployerRatings = () => {
+  const mockData = [
+    {
+      id: 1,
+      star: 0,
+      percentage: 0,
+    },
+    {
+      id: 2,
+      star: 0,
+      percentage: 0,
+    },
+    {
+      id: 3,
+      star: 0,
+      percentage: 0,
+    },
+    {
+      id: 4,
+      star: 1,
+      percentage: "2.5",
+    },
+    {
+      id: 1,
+      star: 39,
+      percentage: "97.5",
+    },
+  ];
+
+  return (
+    <div className="rounded bg-white p-6 drop-shadow-one">
+      <div className="mb-4 flex items-center justify-between">
+        <p className="text-lg font-medium text-primary">Employer Ratings</p>
+        <MockDropdown name="All categories" className="text-sm font-medium" />
+      </div>
+      <div className="mb-4 flex items-center gap-2">
+        <Stars rating={5} />
+        <p className="text-sm font-medium text-gray-500">
+          (4.9 rating based on 20 reviews)
+        </p>
+      </div>
+      <div>
+        <div className="flex h-[60px] items-end gap-6">
+          {mockData.map((data) => (
+            <div className="flex-center relative h-full flex-1">
+              <p
+                className={classNames(
+                  data.percentage >= 60 ? "text-white" : "text-primary",
+                  "relative z-10 text-center text-[13px] font-semibold"
+                )}
+              >
+                {data.percentage}%
+              </p>
+
+              <div
+                className="flex-center absolute bottom-0 w-full bg-[#5EBEDD]"
+                style={{ height: `${data.percentage}%` }}
+              ></div>
+            </div>
+          ))}
+        </div>
+        <hr className="mb-2 border-gray-300" />
+        <div className="flex gap-6">
+          {mockData.map((data, idx) => (
+            <div className="flex flex-1 flex-col text-center text-[13px] font-medium text-gray-400">
+              <p className="">{idx + 1} stars</p>
+              <p className="">({data.star})</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CandidateRatings = () => {
+  const mockData = [
+    {
+      id: 1,
+      star: 0,
+      percentage: 0,
+    },
+    {
+      id: 2,
+      star: 0,
+      percentage: 0,
+    },
+    {
+      id: 3,
+      star: 0,
+      percentage: 0,
+    },
+    {
+      id: 4,
+      star: 1,
+      percentage: "10",
+    },
+    {
+      id: 1,
+      star: 9,
+      percentage: "90",
+    },
+  ];
+
+  return (
+    <div className="rounded bg-white p-6 drop-shadow-one">
+      <p className="mb-4 text-lg font-medium text-primary">Candidate Ratings</p>
+      <div className="flex items-center gap-2">
+        <Stars rating={5} />
+        <p className="text-sm font-medium text-gray-500">
+          (4.9 rating based on 20 reviews)
+        </p>
+      </div>
+      <div>
+        <div className="flex h-[60px] items-end gap-6">
+          {mockData.map((data) => (
+            <div className="flex-center relative h-full flex-1">
+              <p
+                className={classNames(
+                  data.percentage >= 60 ? "text-white" : "text-primary",
+                  "relative z-10 text-center text-[13px] font-semibold"
+                )}
+              >
+                {data.percentage}%
+              </p>
+
+              <div
+                className="flex-center absolute bottom-0 w-full bg-[#5EBEDD]"
+                style={{ height: `${data.percentage}%` }}
+              ></div>
+            </div>
+          ))}
+        </div>
+        <hr className="mb-2 border-gray-300" />
+        <div className="flex gap-6">
+          {mockData.map((data, idx) => (
+            <div className="flex flex-1 flex-col text-center text-[13px] font-medium text-gray-400">
+              <p className="">{idx + 1} stars</p>
+              <p className="">({data.star})</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SpecialisationRatings = () => {
+  return (
+    <div className="rounded bg-white p-6 drop-shadow-one">
+      <div className="mb-4 flex items-center justify-between">
+        <p className="text-lg font-medium text-primary">
+          Specialisation Ratings
+        </p>
+        <MockDropdown name="Overall Ratings" className="text-sm font-medium" />
+      </div>
+      <div className="flex items-center gap-[18px]">
+        <p className="flex-none text-sm font-medium text-primary">Digital</p>
+        <div className="relative flex h-[18px] flex-1 items-center rounded-full bg-gray-300">
+          <div
+            className="absolute h-full rounded-full bg-[#5EBEDD]"
+            style={{ width: "98%" }}
+          />
+          <p className="absolute right-[26px] text-xs font-semibold text-white">
+            4.9 stars (20)
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Stars = ({ rating }) => {
+  return (
+    <div className="flex">
+      {[0, 1, 2, 3, 4].map((item) => (
+        <StarIcon
+          key={item}
+          className={classNames(
+            rating > item ? "text-warning" : "text-gray-300",
+            "h-5 w-5 flex-shrink-0"
+          )}
+          aria-hidden="true"
+        />
+      ))}
     </div>
   );
 };
